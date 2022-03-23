@@ -4,43 +4,47 @@ import { useState } from "react";
 function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [] = useState([]);
+  const [diary, setDiary] = useState([]);
 
-  //const onChange = (event) => setTitle(event.target.value);
+  const onChangeT = (event) => setTitle(event.target.value);
+  const onChangeC = (event) => setContent(event.target.value);
+
   const onSubmit = (event) => {
     event.preventDefault();
-    if (title === "") {
-      return;
-    }
+    //if (title === "") return;
+    
+    setDiary(currentArray => [[title,content], ...currentArray])
+    setTitle("");
+   console.log(diary);
 
   }
 
-  console.log(title);
+
   return (
     <div className="App">
       <h1>Diary</h1>
       <div>
-        <form onSubmit={onSubmit}>
+        <form name="diary" onSubmit={onSubmit}>
           <fieldset>
             <input
-              name="title"
-              //onChange={onChange}
+              value={title}
+              onChange={onChangeT}
               type="text"
-              placeholder='제목'
+              placeholder='제목..'
             />
             <br></br>
-            <textarea 
-            name="content"
-            cols="50" 
-            rows="20" 
-            placeholder='내용'
+            <textarea
+              value={content}
+              onChange={onChangeC}
+              cols="50"
+              rows="20"
+              placeholder='내용..'
             />
           </fieldset>
-
+          <button>Submit</button>
         </form>
-
       </div>
-
+      <hr />
 
     </div>
   );
