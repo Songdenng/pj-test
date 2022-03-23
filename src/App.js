@@ -1,23 +1,47 @@
-import logo from './logo.svg';
 import './App.css';
+import { useState } from "react";
 
 function App() {
+  const [title, setTitle] = useState("");
+  const [content, setContent] = useState("");
+  const [] = useState([]);
+
+  //const onChange = (event) => setTitle(event.target.value);
+  const onSubmit = (event) => {
+    event.preventDefault();
+    if (title === "") {
+      return;
+    }
+
+  }
+
+  console.log(title);
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Diary</h1>
+      <div>
+        <form onSubmit={onSubmit}>
+          <fieldset>
+            <input
+              name="title"
+              //onChange={onChange}
+              type="text"
+              placeholder='제목'
+            />
+            <br></br>
+            <textarea 
+            name="content"
+            cols="50" 
+            rows="20" 
+            placeholder='내용'
+            />
+          </fieldset>
+
+        </form>
+
+      </div>
+
+
     </div>
   );
 }
