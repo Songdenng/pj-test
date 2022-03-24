@@ -13,25 +13,29 @@ function App() {
     event.preventDefault();
     if (title === "") return;
     setDiary(currentArray => [[title,content], ...currentArray])
-    // setTitle("");
-    // saveLocal();
+    setTitle("");
+    setContent("");
   };
 
   useEffect(() => {
     window.localStorage.setItem("diaryInLocal", JSON.stringify(diary));
   },[diary]);
 
-  // const saveLocal = () => {
-  //   localStorage.setItem("diaryInLocal", JSON.stringify(diary));
-  // };
+  useEffect(() => {
+    const data = localStorage.getItem("setDiary");
+    if(data !== null) {
+     data = setDiary(JSON.parse(data));
+    } else return[];
+  },[]);
 
   // console.log(diary);
+  const diaryMap = diary.map((item, index) => (<p key={index}>{item[0]} || {item[1]}</p>));
 
   return (
     <div className="App">
       <h1>Diary</h1>
-      <div>
       <br></br>
+      <div>
         <form name="diary" onSubmit={onSubmit}>
           <fieldset>
             <input
@@ -53,7 +57,9 @@ function App() {
         </form>
       </div>
       <hr />
-
+      <div className="diaryMap">
+        {diaryMap}
+      </div>
     </div>
   );
 }
