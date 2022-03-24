@@ -1,5 +1,5 @@
 import './App.css';
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 function App() {
   const [title, setTitle] = useState("");
@@ -11,19 +11,27 @@ function App() {
 
   const onSubmit = (event) => {
     event.preventDefault();
-    //if (title === "") return;
-    
+    if (title === "") return;
     setDiary(currentArray => [[title,content], ...currentArray])
-    setTitle("");
-   console.log(diary);
+    // setTitle("");
+    // saveLocal();
+  };
 
-  }
+  useEffect(() => {
+    window.localStorage.setItem("diaryInLocal", JSON.stringify(diary));
+  },[diary]);
 
+  // const saveLocal = () => {
+  //   localStorage.setItem("diaryInLocal", JSON.stringify(diary));
+  // };
+
+  // console.log(diary);
 
   return (
     <div className="App">
       <h1>Diary</h1>
       <div>
+      <br></br>
         <form name="diary" onSubmit={onSubmit}>
           <fieldset>
             <input
