@@ -4,10 +4,26 @@ import { useState, useEffect } from "react";
 function App() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
-  const [diary, setDiary] = useState([]);
+  const [diary, setDiary] = useState(() => {
+    if(typeof window !== "undefined"){
+          const saved = window.localStorage.getItem("diaryInLocal");
+          if (saved !== null){
+             return JSON.parse(saved);
+          }else return[""];
+        }
+  });
+ // const [newDiary, setNewDiary] = useState([]);
 
   const onChangeT = (event) => setTitle(event.target.value);
   const onChangeC = (event) => setContent(event.target.value);
+
+  const onClick = (item) => {
+   // console.log(item);
+    let newDiary = diary.filter((diary) => diary !== item)
+    setDiary(newDiary);
+   // setDiary(diary.filter((d) => d.id !== index));
+   // console.log(diary);
+  };
 
   const onSubmit = (event) => {
     event.preventDefault();
@@ -18,18 +34,22 @@ function App() {
   };
 
   useEffect(() => {
-    window.localStorage.setItem("diaryInLocal", JSON.stringify(diary));
+    localStorage.setItem("diaryInLocal", JSON.stringify(diary));
   },[diary]);
-
-  useEffect(() => {
-    const data = localStorage.getItem("setDiary");
-    if(data !== null) {
-     data = setDiary(JSON.parse(data));
-    } else return[];
-  },[]);
-
+  
   // console.log(diary);
-  const diaryMap = diary.map((item, index) => (<p key={index}>{item[0]} || {item[1]}</p>));
+
+  const diaryMap = diary.map((item, index) => (
+    <li
+      key={index}
+      id={index}
+    >
+      {item[0]} / {item[1]}
+      <button id={index} onClick={() => onClick(item)}>
+        Delete
+      </button>
+    </li>
+  ));
 
   return (
     <div className="App">
@@ -39,6 +59,7 @@ function App() {
         <form name="diary" onSubmit={onSubmit}>
           <fieldset>
             <input
+              id="title"
               value={title}
               onChange={onChangeT}
               type="text"
@@ -46,6 +67,7 @@ function App() {
             />
             <br></br>
             <textarea
+              id="content"
               value={content}
               onChange={onChangeC}
               cols="50"
@@ -60,6 +82,7 @@ function App() {
       <div className="diaryMap">
         {diaryMap}
       </div>
+      
     </div>
   );
 }
