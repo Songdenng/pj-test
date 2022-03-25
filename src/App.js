@@ -12,17 +12,13 @@ function App() {
           }else return[""];
         }
   });
- // const [newDiary, setNewDiary] = useState([]);
 
   const onChangeT = (event) => setTitle(event.target.value);
   const onChangeC = (event) => setContent(event.target.value);
 
   const onClick = (item) => {
-   // console.log(item);
-    let newDiary = diary.filter((diary) => diary !== item)
+    const newDiary = diary.filter((diary) => diary !== item)
     setDiary(newDiary);
-   // setDiary(diary.filter((d) => d.id !== index));
-   // console.log(diary);
   };
 
   const onSubmit = (event) => {
@@ -37,8 +33,6 @@ function App() {
     localStorage.setItem("diaryInLocal", JSON.stringify(diary));
   },[diary]);
   
-  // console.log(diary);
-
   const diaryMap = diary.map((item, index) => (
     <li
       key={index}
