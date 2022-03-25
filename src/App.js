@@ -60,6 +60,8 @@ function App() {
               placeholder='제목..'
             />
             <br></br>
+            <br></br>
+            <br></br>
             <textarea
               id="content"
               value={content}
@@ -69,10 +71,13 @@ function App() {
               placeholder='내용..'
             />
           </fieldset>
+          <br></br>
           <button>Submit</button>
         </form>
+        <br></br>
       </div>
       <hr />
+      <br></br>
       <div className="diaryMap">
         {diaryMap}
       </div>
